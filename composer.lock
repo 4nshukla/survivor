@@ -4,31 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "239d8374804809d8294a3a34778cf8c4",
+    "hash": "45012e14a6076fb4e19b860894e130bb",
     "packages": [
         {
-            "name": "redbeanphp",
-            "version": "4.0.9",
-            "dist": {
-                "type": "tar",
-                "url": "http://www.redbeanphp.com/downloadredbean.php",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
-        },
-        {
             "name": "twig/twig",
-            "version": "dev-master",
+            "version": "v1.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "0ceb2e4538f85e450c05dba8f74143d912fdfb54"
+                "reference": "7c4c01dcf578523cfcddf383641a4f12790270ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/0ceb2e4538f85e450c05dba8f74143d912fdfb54",
-                "reference": "0ceb2e4538f85e450c05dba8f74143d912fdfb54",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7c4c01dcf578523cfcddf383641a4f12790270ec",
+                "reference": "7c4c01dcf578523cfcddf383641a4f12790270ec",
                 "shasum": ""
             },
             "require": {
@@ -72,12 +61,12 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-14 18:25:48"
+            "time": "2014-10-10 14:09:53"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
     "platform": [],
