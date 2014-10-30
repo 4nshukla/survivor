@@ -10,7 +10,8 @@
             "app/controllers",
             "app/models",
             "core",
-            "core/helpers"
+            "core/helpers",
+            "app/crons"
         ]
     }
 

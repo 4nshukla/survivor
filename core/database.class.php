@@ -87,4 +87,17 @@ class database
         $this->execute();
         return $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function Single(){
+        $this->execute();
+        return $this->stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function RowCount()
+    {
+
+        $this->execute();
+        $count = ($this->stmt->fetch(\PDO::FETCH_NUM));
+        return $count[0];
+    }
 }

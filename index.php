@@ -2,22 +2,29 @@
 
 /*error reporting*/
 error_reporting(E_ALL);
+session_start();
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
 echo '<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">';
 require_once "vendor/autoload.php";
 use app\controllers\homePageController;
-use app\controllers\loginController;
-use app\models\userModel;
+use app\controllers\SignUpController;
+use app\controllers\SurvivorController;
+use app\crons\ScoreStrip;
 use core\helpers\errorController;
 
+if ($_SERVER['REQUEST_URI'] == "/score-strip")
+{
+    $score_strip = new ScoreStrip();
+    $score_strip->WeeklyGameInsert();
+}
 
 if ($_SERVER['REQUEST_URI'] == "/sign-up")
 {
-    $login_controller = new loginController();
+    $login_controller = new SignUpController();
     if(!empty($_POST))
     {
-        $login_controller->SignUp();
+        $login_controller->signup();
     }
     else
     {
@@ -38,17 +45,13 @@ if ($_SERVER['REQUEST_URI'] == "/")
     }
 }
 
-//if not on home page or sign up, create a new user model
-if ($_SERVER['REQUEST_URI'] != "/" && $_SERVER['REQUEST_URI'] != "/sign-up")
+if ($_SERVER['REQUEST_URI'] == "/survivor")
 {
-
-    //$error_controller = new errorController();
-    //$error_controller->show404();
-    //$user_model = new userModel();
-    //$user_model->addUser("nilesh4life@gmail.com","pass","Nilesh Shukla");
-    $home_controller = new homePageController();
-    $home_controller->index();
+    $survivor_controller = new SurvivorController();
+    $survivor_controller->index();
 }
+
+
 
 if ($_SERVER['REQUEST_URI'] != "/")
     $homepage = new homePageController();

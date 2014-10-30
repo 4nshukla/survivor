@@ -11,11 +11,11 @@ class userModel extends database
     }
 
     public function loginCheck()
-    {/*
-        $dbh = new database();
-        $dbh->query("SELECT * FROM users");
-        var_dump($dbh->resultset());
-*/
+    {
+        if (empty($_SESSION['email']))
+        {
+            header( 'Location: /' ) ;
+        }
     }
 
     /**
@@ -34,7 +34,7 @@ class userModel extends database
 
     public function login($email, $password)
     {
-            $this->db_handle->query("SELECT * FROM users WHERE email = :email AND password =:password");
+            $this->db_handle->query("SELECT * FROM users WHERE email = :email AND password =:password AND is_active = 1");
             $this->db_handle->bind(':email',$email);
             $this->db_handle->bind(':password',$password);
             $user_data = $this->db_handle->resultset();
@@ -43,7 +43,8 @@ class userModel extends database
 
     public function logout()
     {
-
+        session_destroy();
+        return;
     }
 
 }

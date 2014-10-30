@@ -45,7 +45,8 @@ class homePageController
             }
             else
             {
-                var_dump($user_data);
+                $_SESSION['email'] = $user_data[0]['email'];
+                header( 'Location: /survivor' ) ;
             }
         }
     }
