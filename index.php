@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_URI'] == "/survivor")
 }
 
 
-
 if ($_SERVER['REQUEST_URI'] != "/")
     $homepage = new homePageController();
 
