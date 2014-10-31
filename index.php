@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_URI'] == "/score-strip")
     $score_strip->WeeklyGameInsert();
 }
 
+
 if ($_SERVER['REQUEST_URI'] == "/sign-up")
 {
     $login_controller = new SignUpController();

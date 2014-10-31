@@ -19,7 +19,6 @@ class ScoreStrip
         $scores = str_replace(',,' , ',"",', $scores);
         $scores = str_replace(',,' , ',"",', $scores);
         $scores = json_decode($scores);
-        print_r($scores);
         $scores =  (array) $scores;
         $week = substr($scores['ss'][0][12], -1);
 
@@ -45,9 +44,19 @@ class ScoreStrip
         {
             foreach($scores['ss'] as $value)
             {
-                $this->db_handle->query("UPDATE weekly_games SET away_team_score = :away_team_score,
-                                                                 home_team_score = :home_team_score
-                                                             WHERE provider_team_id = $value[10]");
+                if($value[2] != "Pregame")
+                {
+                    $this->db_handle->query("UPDATE weekly_games SET away_team_score = :away_team_score,
+                                                                     home_team_score = :home_team_score,
+                                                                     quarter = :quarter,
+                                                                     quarter_time_left = :quarter_time_left
+                                                                 WHERE provider_id = $value[10]");
+                    $this->db_handle->bind(':away_team_score',$value[5]);
+                    $this->db_handle->bind(':home_team_score',$value[7]);
+                    $this->db_handle->bind(':quarter',$value[2]);
+                    $this->db_handle->bind(':quarter_time_left',$value[3]);
+                    $this->db_handle->execute();
+                }
             }
         }
 
