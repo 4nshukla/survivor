@@ -1,0 +1,22 @@
+{% include 'header.twig' %}
+<link rel="stylesheet" href="/app/assets/css/survivor.css"/>
+<div class="container">
+    <div class="row">
+        <form role="form">
+            <div class="radio">
+                {% for weekly_score in weekly_socres %}
+                    <div class="item">
+                        <div class="well">
+                            <div>
+                                {{ weekly_score['quarter'] }}
+                            </div>
+                            <label><input type="radio" name="optradio">{{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
+                            <label><input type="radio" name="optradio">{{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'footer.twig' %}
