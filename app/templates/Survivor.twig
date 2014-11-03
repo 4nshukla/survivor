@@ -1,5 +1,8 @@
 {% include 'header.twig' %}
 <link rel="stylesheet" href="/app/assets/css/survivor.css"/>
+<div class="container" style="text-align: right;">
+        <h4>Hello, {{ user_data['name'] }} </h4>
+</div>
 <div class="container">
     <div class="row">
         <form role="form">
@@ -10,8 +13,14 @@
                             <div>
                                 {{ weekly_score['quarter'] }}
                             </div>
-                            <label><input type="radio" name="optradio">{{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
-                            <label><input type="radio" name="optradio">{{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+                            <div class="container">
+                                <div class="row">
+                                    <label><input type="radio" name="optradio">{{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}
+                                </div>
+                                <div class="row">
+                                    <label><input type="radio" name="optradio">{{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

@@ -46,6 +46,7 @@ class homePageController
             else
             {
                 $_SESSION['email'] = $user_data[0]['email'];
+                $_SESSION['name'] = $user_data[0]['full_name'];
                 header( 'Location: /survivor' ) ;
             }
         }

@@ -22,6 +22,10 @@ class ScoreStrip
         $scores =  (array) $scores;
         $week = substr($scores['ss'][0][12], -1);
 
+        $this->db_handle->query("UPDATE settings SET site_value = :week WHERE site_key = 'current_week'");
+        $this->db_handle->bind(':week',$week);
+        $this->db_handle->execute();
+
         $this->db_handle->query("SELECT COUNT(*) FROM weekly_games WHERE week = :week");
         $this->db_handle->bind(':week',$week);
         $already_exists = $this->db_handle->RowCount();
@@ -59,6 +63,9 @@ class ScoreStrip
                 }
             }
         }
+
+        $this->db_handle->query("UPDATE weekly_games SET winner = IF (away_team_score > home_team_score, away_team, home_team) WHERE quarter = 'Final'");
+        $this->db_handle->execute();
 
     }
 

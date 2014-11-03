@@ -25,22 +25,23 @@ class SurvivorController
         //var_dump($this_week);
         foreach($this_week as $key=>$value)
         {
-                if(is_numeric($this_week[$key]['quarter']))
-                {
-                    $this_week[$key]['quarter'] = "Quarter: ".$this_week[$key]['quarter'];
-                }
-                elseif($this_week[$key]['quarter'] != "Final" AND $this_week[$key]['quarter'] != "Half")
-                {
-                    $this_week[$key]['quarter'] = strtoupper($this_week[$key]['day']. " AT " . $this_week[$key]['time']);
-                    $this_week[$key]['home_team_score'] = "--";
-                    $this_week[$key]['away_team_score'] = "--";
-                }
+            if(is_numeric($this_week[$key]['quarter']))
+            {
+                $this_week[$key]['quarter'] = "Quarter: ".$this_week[$key]['quarter'];
+            }
+            elseif($this_week[$key]['quarter'] != "Final" AND $this_week[$key]['quarter'] != "Half")
+            {
+                $this_week[$key]['quarter'] = strtoupper($this_week[$key]['day']. " AT " . $this_week[$key]['time']);
+                $this_week[$key]['home_team_score'] = "--";
+                $this_week[$key]['away_team_score'] = "--";
+            }
         }
 
+        $user_data['name'] =  $_SESSION['name'];
         $this->twig = twigFactory::getTwig();
         // load the form template
         $template = $this->twig->loadTemplate('Survivor.twig');
         // render and pass in the title at the same time
-        echo $template->render(array('weekly_socres' => $this_week));
+        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data));
     }
 }
