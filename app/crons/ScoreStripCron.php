@@ -20,7 +20,7 @@ class ScoreStrip
         $scores = str_replace(',,' , ',"",', $scores);
         $scores = json_decode($scores);
         $scores =  (array) $scores;
-        $week = substr($scores['ss'][0][12], -1);
+        $week = substr($scores['ss'][0][12], 3);
 
         $this->db_handle->query("UPDATE settings SET site_value = :week WHERE site_key = 'current_week'");
         $this->db_handle->bind(':week',$week);
