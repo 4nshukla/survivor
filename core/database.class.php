@@ -80,6 +80,12 @@ class database
         return $this->stmt->execute();
     }
 
+    public function insert()
+    {
+        $this->stmt->execute();
+        return $this->dbh->lastInsertId();
+    }
+
     /**
      * @return mixed
      */
