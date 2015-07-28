@@ -12,7 +12,7 @@ class userModel extends database
 
     public function loginCheck()
     {
-        if (empty($_SESSION['email']))
+        if (empty($_SESSION['user_id']))
         {
             header( 'Location: /' ) ;
         }

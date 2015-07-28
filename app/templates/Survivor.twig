@@ -28,38 +28,12 @@
 <div class="container">
     <div class="row">
         {% for weekly_score in weekly_socres %}
-        <div class="col-md-3 fixed">
+        <div class="col-md-3 fixed" id = "select_options">
             <div class="title">{{ weekly_score['quarter'] }}</div><hr>
-            <label><input type="radio" name="optradio">{{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
-            <label><input type="radio" name="optradio">{{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+            <label><input type="radio" name="optradio" value="{{ weekly_score['away_team'] }}" {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}> {{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
+            <label><input type="radio" name="optradio" value="{{ weekly_score['home_team'] }}" {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}"> {{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
         </div>
         {% endfor %}
     </div>
 </div>
-<!---
-<div class="container">
-    <div class="row">
-        <form role="form">
-            <div class="radio">
-                {% for weekly_score in weekly_socres %}
-                    <div class="item">
-                        <div class="well">
-                            <div>
-                                {{ weekly_score['quarter'] }}
-                            </div>
-                            <div class="container">
-                                <div class="row">
-                                    <label><input type="radio" name="optradio">{{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}
-                                </div>
-                                <div class="row">
-                                    <label><input type="radio" name="optradio">{{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </form>
-    </div>
-</div> --->
 {% include 'footer.twig' %}

@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Settings;
+use app\models\settingsModel;
 use app\models\userModel;
 use core\helpers\twigFactory;
 
@@ -47,6 +49,16 @@ class homePageController
             {
                 $_SESSION['email'] = $user_data[0]['email'];
                 $_SESSION['name'] = $user_data[0]['full_name'];
+                $_SESSION['user_id'] = $user_data[0]['id'];
+
+                $settings = new settingsModel();
+                $settings_data = $settings->getSettings();
+                foreach($settings_data as $setting)
+                {
+                    if($setting['site_key'] == 'current_week')
+                        $_SESSION['current_week'] = $setting['site_value'];
+                }
+
                 header( 'Location: /survivor' ) ;
             }
         }

@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\models\userModel;
 use app\models\ScoreModel;
+use app\models\userPicksModel;
 use core\helpers\twigFactory;
 
 class SurvivorController
@@ -19,8 +20,21 @@ class SurvivorController
         $user_model = new userModel();
         $user_model->loginCheck();
 
+        //pass user id to javascript
+        echo "<script>
+                var user_id = '$_SESSION[user_id]';
+                var current_week = '$_SESSION[current_week]';
+              </script>";
+
         $scores = new ScoreModel();
         $this_week = $scores->CurrentScores();
+
+        //get current week pick
+        $pick_obj = new userPicksModel();
+        $pick_results = $pick_obj->getCurrentWeekPick();
+        $team_picked = $pick_results[0]['team_picked'];
+
+
 
         //var_dump($this_week);
         foreach($this_week as $key=>$value)
@@ -37,11 +51,13 @@ class SurvivorController
             }
         }
 
+        $javascript = ['survivor.js'];
+
         $user_data['name'] =  $_SESSION['name'];
         $this->twig = twigFactory::getTwig();
         // load the form template
         $template = $this->twig->loadTemplate('Survivor.twig');
         // render and pass in the title at the same time
-        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data));
+        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data, 'js' => $javascript, 'team_picked' => $team_picked));
     }
 }
