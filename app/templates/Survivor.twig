@@ -3,6 +3,16 @@
         <h4>Hello, {{ user_data['name'] }} </h4>
 </div>
 
+<link rel="stylesheet" href="../app/assets/css/slidebars.css">
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            $.slidebars();
+        });
+    }) (jQuery);
+</script>
+
 <style>
     body {
     }
@@ -30,21 +40,51 @@
         color: #245269;
         font-size: 20px;
     }
+
+    .player-list-sidebar{
+        color: #ffffff;
+    }
+
+    .player-list-sidebar div{
+        padding-bottom: 5px;
+        padding-top: 5px;
+        border-bottom: solid #ffffff;
+    }
+
+    .player-status-icon {
+        width: 50px;
+        height: 50px;
+    }
 </style>
 
-<div id="message">
-    <span></span>
+<div id="sb-site">
+    <ul>
+        <li class="sb-toggle-left">See rankings</li>
+    </ul>
+
+    <div id="message">
+        <span></span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% for weekly_score in weekly_socres %}
+                <div class="col-md-3 fixed" id = "select_options">
+                    <div class="title">{{ weekly_score['quarter'] }}</div><hr>
+                    <label><input type="radio" name="optradio" value="{{ weekly_score['away_team'] }}" {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}> {{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
+                    <label><input type="radio" name="optradio" value="{{ weekly_score['home_team'] }}" {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}"> {{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'footer.twig' %}
+
 </div>
 
-<div class="container">
-    <div class="row">
-        {% for weekly_score in weekly_socres %}
-        <div class="col-md-3 fixed" id = "select_options">
-            <div class="title">{{ weekly_score['quarter'] }}</div><hr>
-            <label><input type="radio" name="optradio" value="{{ weekly_score['away_team'] }}" {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}> {{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
-            <label><input type="radio" name="optradio" value="{{ weekly_score['home_team'] }}" {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}"> {{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
-        </div>
-        {% endfor %}
-    </div>
+<div class="sb-slidebar sb-left sb-style-push player-list-sidebar">
+    {% for ranking in rankings %}
+        <div> <img class="player-status-icon" src = "../app/assets/images/{{ ranking['status'] }}.png"/> {{ ranking['full_name'] }}</div>
+    {% endfor %}
 </div>
-{% include 'footer.twig' %}
+
+

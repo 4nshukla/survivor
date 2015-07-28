@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\models\userModel;
 use app\models\ScoreModel;
 use app\models\userPicksModel;
+use app\models\UserRankingsModel;
 use core\helpers\twigFactory;
 
 class SurvivorController
@@ -29,6 +30,9 @@ class SurvivorController
         $scores = new ScoreModel();
         $this_week = $scores->CurrentScores();
 
+        $rankings_obj = new UserRankingsModel();
+        $rankings = $rankings_obj->getCurrentRankings();
+
         //get current week pick
         $pick_obj = new userPicksModel();
         $pick_results = $pick_obj->getCurrentWeekPick();
@@ -51,13 +55,13 @@ class SurvivorController
             }
         }
 
-        $javascript = ['survivor.js'];
+        $javascript = ['survivor.js', 'slidebars.js'];
 
         $user_data['name'] =  $_SESSION['name'];
         $this->twig = twigFactory::getTwig();
         // load the form template
         $template = $this->twig->loadTemplate('Survivor.twig');
         // render and pass in the title at the same time
-        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data, 'js' => $javascript, 'team_picked' => $team_picked));
+        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data, 'js' => $javascript, 'team_picked' => $team_picked, 'rankings' => $rankings));
     }
 }
