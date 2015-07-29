@@ -28,4 +28,12 @@ class SignUpController
         $user->AddUser($_POST['email'], $_POST['password'], $_POST['full_name']);
         header( 'Location: /' ) ;
     }
+
+    public function logout()
+    {
+        session_destroy();
+        header( 'Location: /' ) ;
+    }
+
+
 }

@@ -41,10 +41,30 @@ class userModel extends database
             return $user_data;
     }
 
-    public function logout()
+
+    public function getCurrentUserStatus($user_id = null)
     {
-        session_destroy();
-        return;
+        $user_id =  ($user_id == null ? $_SESSION['user_id'] : $user_id);
+        $this->db_handle->query("SELECT COUNT(*) as count FROM user_picks WHERE does_move_on = 0 AND user_id = ".$user_id);
+        if ($this->db_handle->resultset()[0]['count'] > 0)
+        {
+            return 'out';
+        }
+        else
+        {
+            return 'in';
+        }
+    }
+
+    public function getAllPreviousPicks()
+    {
+        $this->db_handle->query("SELECT DISTINCT team_picked FROM user_picks WHERE user_id = ".$_SESSION['user_id']." AND does_move_on IN (1,0)");
+        $previous_picks = [];
+        foreach($this->db_handle->resultset() as $pick)
+        {
+            $previous_picks = array_merge($previous_picks, array($pick['team_picked']));
+        }
+        return $previous_picks;
     }
 
 }

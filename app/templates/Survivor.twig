@@ -1,6 +1,7 @@
 {% include 'header.twig' %}
 <div class="container" style="text-align: right;">
         <h4>Hello, {{ user_data['name'] }} </h4>
+        <span><a href="/logout">(logout)</a></span>
 </div>
 
 <link rel="stylesheet" href="../app/assets/css/slidebars.css">
@@ -63,7 +64,9 @@
     </ul>
 
     <div id="message">
-        <span></span>
+        <span>
+            {% if user_data['game_status'] == 'out' %}Sorry, You already have lost the tournament!! {% endif %}
+        </span>
     </div>
 
     <div class="container">
@@ -71,8 +74,24 @@
             {% for weekly_score in weekly_socres %}
                 <div class="col-md-3 fixed" id = "select_options">
                     <div class="title">{{ weekly_score['quarter'] }}</div><hr>
-                    <label><input type="radio" name="optradio" value="{{ weekly_score['away_team'] }}" {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}> {{ weekly_score['away_team'] }}</label> {{ weekly_score['away_team_score'] }}<br/>
-                    <label><input type="radio" name="optradio" value="{{ weekly_score['home_team'] }}" {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}"> {{ weekly_score['home_team'] }}</label> {{ weekly_score['home_team_score'] }}
+                    <label><input
+                                type="radio"
+                                name="optradio"
+                                value="{{ weekly_score['away_team'] }}"
+                                {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}
+                                {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
+                                {% if weekly_score['away_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
+                        {{ weekly_score['away_team'] }}
+                    </label> {{ weekly_score['away_team_score'] }}<br/>
+                    <label><input
+                                type="radio"
+                                name="optradio"
+                                value="{{ weekly_score['home_team'] }}"
+                                {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}
+                                {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
+                                {% if weekly_score['home_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
+                        {{ weekly_score['home_team'] }}
+                    </label> {{ weekly_score['home_team_score'] }}
                 </div>
             {% endfor %}
         </div>

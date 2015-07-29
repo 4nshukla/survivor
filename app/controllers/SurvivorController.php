@@ -38,7 +38,14 @@ class SurvivorController
         $pick_results = $pick_obj->getCurrentWeekPick();
         $team_picked = $pick_results[0]['team_picked'];
 
+        //get current user status
+        $user_model = new userModel();
+        $status = $user_model->getCurrentUserStatus();
+        $user_data['game_status'] = $status;
 
+        //get all previous picks
+        $previous_picks = $user_model->getAllPreviousPicks();
+        $user_data['previous_picks'] = $previous_picks;
 
         //var_dump($this_week);
         foreach($this_week as $key=>$value)

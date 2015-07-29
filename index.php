@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_URI'] == "/score-strip")
     $score_strip->WeeklyGameInsert();
 }
 
+if ($_SERVER['REQUEST_URI'] == "/logout")
+{
+    $logout_controller = new SignUpController();
+    $logout_controller->logout();
+}
+
 
 if ($_SERVER['REQUEST_URI'] == "/sign-up")
 {
