@@ -50,6 +50,7 @@ class ScoreStrip
             {
                 if($value[2] != "Pregame")
                 {
+                    var_dump($value);
                     $this->db_handle->query("UPDATE weekly_games SET away_team_score = :away_team_score,
                                                                      home_team_score = :home_team_score,
                                                                      quarter = :quarter,

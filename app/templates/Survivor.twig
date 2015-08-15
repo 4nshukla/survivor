@@ -80,6 +80,7 @@
                                 value="{{ weekly_score['away_team'] }}"
                                 {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}
                                 {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
+                                <!--- add the logic about if game has finishes or started then radio disable -->
                                 {% if weekly_score['away_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
                         {{ weekly_score['away_team'] }}
                     </label> {{ weekly_score['away_team_score'] }}<br/>
