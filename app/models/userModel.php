@@ -56,9 +56,10 @@ class userModel extends database
         }
     }
 
-    public function getAllPreviousPicks()
+    public function getAllPreviousPicks($week_number)
     {
-        $this->db_handle->query("SELECT DISTINCT team_picked FROM user_picks WHERE user_id = ".$_SESSION['user_id']." AND does_move_on IN (1,0)");
+        //assuming the update only happens on last pick
+        $this->db_handle->query("SELECT DISTINCT team_picked FROM user_picks WHERE user_id = ".$_SESSION['user_id']." AND does_move_on IN (1,0) AND week_number < ".$week_number);
         $previous_picks = [];
         foreach($this->db_handle->resultset() as $pick)
         {

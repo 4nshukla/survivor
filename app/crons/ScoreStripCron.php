@@ -12,6 +12,45 @@ class ScoreStrip
         $this->db_handle = new database();
     }
 
+    public function updateUserGameStatus()
+    {
+        $this->db_handle->query('SELECT site_value FROM settings WHERE site_key = "current_week"');
+        $week_in_db = $this->db_handle->Single();
+
+        $this->db_handle->query('SELECT * FROM users WHERE is_active = 1');
+        $users = $this->db_handle->resultset();
+
+        $this->db_handle->query('SELECT IF(winner = away_team, home_team, away_team) as loser FROM weekly_games WHERE week = '.$week_in_db['site_value']);
+        $loser_teams_sub_array = $this->db_handle->resultset();
+
+        $loser_teams = [];
+
+        foreach($loser_teams_sub_array as $loser_team_sub_array)
+        {
+            $loser_teams[] = $loser_team_sub_array['loser'];
+        }
+
+        foreach($users as $user)
+        {
+            $this->db_handle->query('SELECT id, team_picked FROM user_picks WHERE week_number = '.$week_in_db['site_value']. ' AND user_id = '. $user['id'] .' ORDER BY id DESC LIMIT 1');
+            $user_team_picked = $this->db_handle->resultset();
+
+            if(in_array($user_team_picked['team_picked'], $loser_teams))
+            {
+                //if the pick lost
+                $this->db_handle->query("UPDATE user_picks SET does_move_on = 0 WHERE id = ". $user_team_picked[0]['id']);
+                $this->db_handle->execute();
+            }
+            else
+            {
+                //if the pick won
+                $this->db_handle->query("UPDATE user_picks SET does_move_on = 1 WHERE id = ". $user_team_picked[0]['id']);
+                $this->db_handle->execute();
+            }
+        }
+
+    }
+
     public function WeeklyGameInsert()
     {
         $scores = file_get_contents('http://www.nfl.com/liveupdate/scorestrip/scorestrip.json');
@@ -30,8 +69,12 @@ class ScoreStrip
         $this->db_handle->bind(':week',$week);
         $already_exists = $this->db_handle->RowCount();
 
+        //if games for this week do not exists
         if($already_exists == 0)
         {
+            //first update last week's user records
+            $this->updateUserGameStatus();
+
             foreach($scores['ss'] as $value)
             {
                 $this->db_handle->query("INSERT INTO weekly_games (provider_id, away_team, home_team, week, day, time) VALUES (:provider_id, :away_team, :home_team, :week, :day, :time)");

@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 session_start();
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
+date_default_timezone_set('America/New_York');
 echo '<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">';
 require_once "vendor/autoload.php";
 use app\controllers\homePageController;

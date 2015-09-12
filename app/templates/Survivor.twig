@@ -80,7 +80,8 @@
                                 value="{{ weekly_score['away_team'] }}"
                                 {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}
                                 {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
-                                <!--- add the logic about if game has finishes or started then radio disable -->
+                                {% if user_data['picked_game_begin'] == 'yes' %} disabled="disabled" {% endif %}
+                                {% if weekly_score['game_remain'] == 0 %} disabled="disabled" {% endif %}
                                 {% if weekly_score['away_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
                         {{ weekly_score['away_team'] }}
                     </label> {{ weekly_score['away_team_score'] }}<br/>
@@ -90,6 +91,8 @@
                                 value="{{ weekly_score['home_team'] }}"
                                 {% if weekly_score['home_team'] == team_picked %} checked="checked" {% endif %}
                                 {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
+                                {% if user_data['picked_game_begin'] == 'yes' %} disabled="disabled" {% endif %}
+                                {% if weekly_score['game_remain'] == 0 %} disabled="disabled" {% endif %}
                                 {% if weekly_score['home_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
                         {{ weekly_score['home_team'] }}
                     </label> {{ weekly_score['home_team_score'] }}
