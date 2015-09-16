@@ -107,7 +107,7 @@ class SurvivorController
         elseif ($this->days_of_the_week[$current_day] == $this->days_of_the_week[$game_day])
         {
             //check time logic for same day
-            $game_time = $game_data['time']." PM";
+            $game_time = $game_data['time'];
 
             //if game time is greater than now, then the game is enabled to pick since it hasnt started yet
             if(strtotime($game_time) > strtotime("now"))
