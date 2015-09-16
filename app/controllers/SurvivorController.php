@@ -42,12 +42,21 @@ class SurvivorController
         //get current week pick
         $pick_obj = new userPicksModel();
         $pick_results = $pick_obj->getCurrentWeekPick();
-        $team_picked = $pick_results[0]['team_picked'];
 
-        //check if the game user picked has already begun or finished
+        if($pick_results)
+        {
+        $team_picked = $pick_results[0]['team_picked'];
         $current_pick_game = $scores->getCurrentWeekGame($team_picked);
-        $game_remain_to_play = $this->__checkIFGameRemainsToPlay($current_pick_game);
-        $user_data['picked_game_begin'] = ($game_remain_to_play == 1 ? 'no' : 'yes');
+            if($current_pick_game)
+            {
+                //check if the game user picked has already begun or finished
+                $game_remain_to_play = $this->__checkIFGameRemainsToPlay($current_pick_game);
+                $user_data['picked_game_begin'] = ($game_remain_to_play == 1 ? 'no' : 'yes');
+            }
+        }
+
+
+
 
         //get current user status
         $user_model = new userModel();
