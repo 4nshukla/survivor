@@ -20,7 +20,8 @@ class ScoreStrip
         $this->db_handle->query('SELECT * FROM users WHERE is_active = 1');
         $users = $this->db_handle->resultset();
 
-        $this->db_handle->query('SELECT IF(winner = away_team, home_team, away_team) as loser FROM weekly_games WHERE week = '.$week_in_db['site_value']);
+        $previous_week = $week_in_db['site_value']-1;
+        $this->db_handle->query('SELECT IF(winner = away_team, home_team, away_team) as loser FROM weekly_games WHERE week = '.$previous_week);
         $loser_teams_sub_array = $this->db_handle->resultset();
 
         $loser_teams = [];
@@ -32,10 +33,10 @@ class ScoreStrip
 
         foreach($users as $user)
         {
-            $this->db_handle->query('SELECT id, team_picked FROM user_picks WHERE week_number = '.$week_in_db['site_value']. ' AND user_id = '. $user['id'] .' ORDER BY id DESC LIMIT 1');
+            $this->db_handle->query('SELECT id, team_picked FROM user_picks WHERE week_number = '.$previous_week. ' AND user_id = '. $user['id'] .' ORDER BY id DESC LIMIT 1');
             $user_team_picked = $this->db_handle->resultset();
 
-            if(in_array($user_team_picked['team_picked'], $loser_teams))
+            if(in_array($user_team_picked[0]['team_picked'], $loser_teams))
             {
                 //if the pick lost
                 $this->db_handle->query("UPDATE user_picks SET does_move_on = 0 WHERE id = ". $user_team_picked[0]['id']);
@@ -61,6 +62,7 @@ class ScoreStrip
         $scores =  (array) $scores;
         $week = substr($scores['ss'][0][12], 3);
 
+        //update week to the feed week
         $this->db_handle->query("UPDATE settings SET site_value = :week WHERE site_key = 'current_week'");
         $this->db_handle->bind(':week',$week);
         $this->db_handle->execute();
