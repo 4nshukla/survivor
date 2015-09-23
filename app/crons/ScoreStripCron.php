@@ -31,22 +31,20 @@ class ScoreStrip
             $loser_teams[] = $loser_team_sub_array['loser'];
         }
 
-        foreach($users as $user)
-        {
-            $this->db_handle->query('SELECT id, team_picked FROM user_picks WHERE week_number = '.$previous_week. ' AND user_id = '. $user['id'] .' ORDER BY id DESC LIMIT 1');
+        foreach ($users as $user) {
+            $this->db_handle->query('SELECT id, team_picked FROM user_picks WHERE week_number = ' . $previous_week . ' AND user_id = ' . $user['id'] . ' ORDER BY id DESC LIMIT 1');
             $user_team_picked = $this->db_handle->resultset();
 
-            if(in_array($user_team_picked[0]['team_picked'], $loser_teams))
-            {
-                //if the pick lost
-                $this->db_handle->query("UPDATE user_picks SET does_move_on = 0 WHERE id = ". $user_team_picked[0]['id']);
-                $this->db_handle->execute();
-            }
-            else
-            {
-                //if the pick won
-                $this->db_handle->query("UPDATE user_picks SET does_move_on = 1 WHERE id = ". $user_team_picked[0]['id']);
-                $this->db_handle->execute();
+            if ( ! empty($user_team_picked)) {
+                if (in_array($user_team_picked[0]['team_picked'], $loser_teams)) {
+                    //if the pick lost
+                    $this->db_handle->query("UPDATE user_picks SET does_move_on = 0 WHERE id = " . $user_team_picked[0]['id']);
+                    $this->db_handle->execute();
+                } else {
+                    //if the pick won
+                    $this->db_handle->query("UPDATE user_picks SET does_move_on = 1 WHERE id = " . $user_team_picked[0]['id']);
+                    $this->db_handle->execute();
+                }
             }
         }
 
