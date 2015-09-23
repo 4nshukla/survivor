@@ -78,7 +78,7 @@
             {% for weekly_score in weekly_socres %}
                 <div class="col-md-3 fixed" id = "select_options">
                     <div class="title">{{ weekly_score['quarter'] }}</div><hr>
-                    {% if weekly_score['home_team'] in user_data['previous_picks'] %} <img src="../app/assets/images/stop.png" width="20px;" />
+                    {% if weekly_score['away_team'] in user_data['previous_picks'] %} <img src="../app/assets/images/stop.png" width="20px;" />
                     {% else %}
                         <label><input
                                     type="radio"
@@ -87,7 +87,7 @@
                                     {% if weekly_score['away_team'] == team_picked %} checked="checked" {% endif %}
                                     {% if user_data['game_status'] == 'out' %} disabled="disabled" {% endif %}
                                     {% if user_data['picked_game_begin'] == 'yes' %} disabled="disabled" {% endif %}
-                                    {% if weekly_score['home_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}
+                                    {% if weekly_score['away_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}
                                     >
 
                         </label>
