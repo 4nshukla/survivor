@@ -67,6 +67,14 @@ class SurvivorController
         $previous_picks = $user_model->getAllPreviousPicks($_SESSION['current_week']);
         $user_data['previous_picks'] = $previous_picks;
 
+        //get pick numbers for each team
+        $team_pick_count = [];
+        $total_picks_by_team = $pick_obj->getTotalPicksByTeam();
+        foreach($total_picks_by_team as $team_pick)
+        {
+            $team_pick_count[$team_pick['team_picked']] = $team_pick['count'];
+        }
+
         foreach($this_week as $key=>$value)
         {
             //check if the game is started/finished, if so make the dropdown disabled
@@ -91,7 +99,7 @@ class SurvivorController
         $template = $this->twig->loadTemplate('Survivor.twig');
 
         // render and pass in the title at the same time
-        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data, 'js' => $javascript, 'team_picked' => $team_picked, 'rankings' => $rankings));
+        echo $template->render(array('weekly_socres' => $this_week, 'user_data' => $user_data, 'js' => $javascript, 'team_picked' => $team_picked, 'rankings' => $rankings, 'team_pick_count' => $team_pick_count));
     }
 
     private function __checkIFGameRemainsToPlay($game_data)

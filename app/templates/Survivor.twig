@@ -60,6 +60,12 @@
     .team_name {
         font-weight: 600;
     }
+
+    .team_pick_count
+    {
+        font-weight: bold;
+        color: #ec971f;
+    }
 </style>
 
 <div id="sb-site">
@@ -91,7 +97,8 @@
                                     >
 
                         </label>
-                    {% endif %} <span class="team_name"> {{ weekly_score['away_team'] }} </span> {{ weekly_score['away_team_score'] }}<br/>
+                    {% endif %} <span class="team_name"> {{ weekly_score['away_team'] }} </span>
+                                <span class="team_pick_count"> {{ team_pick_count[weekly_score['away_team']] }} </span> {{ weekly_score['away_team_score'] }}<br/>
                     {% if weekly_score['home_team'] in user_data['previous_picks'] %} <img src="../app/assets/images/stop.png" width="20px;" />
                     {% else %}
                         <label><input
@@ -104,7 +111,8 @@
                                     {% if weekly_score['game_remain'] == 0 %} disabled="disabled" {% endif %}
                                     {% if weekly_score['home_team'] in user_data['previous_picks'] %} disabled="disabled" {% endif %}>
                         </label>
-                    {% endif %} <span class="team_name">  {{ weekly_score['home_team'] }} </span> {{ weekly_score['home_team_score'] }}
+                    {% endif %} <span class="team_name">  {{ weekly_score['home_team'] }} </span>
+                                <span class="team_pick_count"> {{ team_pick_count[weekly_score['home_team']] }} </span> {{ weekly_score['home_team_score'] }}
                 </div>
             {% endfor %}
         </div>
