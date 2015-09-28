@@ -68,4 +68,28 @@ class userModel extends database
         return $previous_picks;
     }
 
+    public function checkIfCertified()
+    {
+        $query = "SELECT is_certified FROM users WHERE id = ".$_SESSION['user_id'];
+        $this->db_handle->query($query);
+        $response = $this->db_handle->Single();
+        return $response['is_certified'];
+    }
+
+    public function makeCertified()
+    {
+
+        //check if user selected checkbox
+        if($_POST['certified'] == 'yes')
+        {
+            $query = "UPDATE users SET is_certified = 1 WHERE id = ".$_SESSION['user_id'];
+            $this->db_handle->query($query);
+            $this->db_handle->execute();
+        }
+        else
+        {
+            header( 'Location: /certification?q=check' ) ;
+        }
+    }
+
 }

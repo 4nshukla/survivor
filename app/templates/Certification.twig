@@ -1,0 +1,34 @@
+{% include 'header.twig' %}
+<div class="container">
+    {% if error == 'yes' %}
+        You have to agree terms to proceed!
+    {% endif %}
+    <img src="http://media.moddb.com/images/games/1/16/15663/Survivor-Logo-Web.png" width="500px;"/>
+    <div class="row">
+        <div class="span6">
+            <ul>
+                <li><b>Rules:</b></li>
+                <li>First and foremost, In order to register a team, you will have to pick one on the site and also let <a href = "http://facebook.com/nilesh.shukla/">Nilesh</a> know at the same time by leaving a facebook message before that game starts. If you fail to do so, and site does act up, you will likely be eliminated.</li>
+                <li>The object of the Survivor pool is to be the last active player. It will strench into playoffs as well, so pick your teams wisely.</li>
+                <li>The last user(s) remaining wins the entire pool!  There are no other prizes.</li>
+                <li>If you select a team that is on a bye for the week, that will count as a loss. You will be ultimately responsible for keeping track of what teams are playing each week.</li>
+                <li>Games that end in a tie is a win. You will move forward into next week if so.</li>
+                <li>If you fail to pick a team, you will be disqualified</li>
+                <li>You can change your team as long as the team you picked hasnt started playing and the one you want to pick hasnt started playing either</li>
+                <li> Please pay $5 to <a href="https://www.facebook.com/boney149">Boney</a> if you havent done so yet!</li>
+                <li>Please direct any questions or problems to <a href = "http://facebook.com/nilesh.shukla/">Nilesh</a></li>
+                <li>Have fun and enjoy!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span6">
+            <form role="form" id="form" action="" method="post">
+                <input type="checkbox" name="certified" value="yes" checked> I agree to all bullet points above!
+                <button type="submit" class="btn btn-default pull-right">Agree</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% include 'footer.twig' %}

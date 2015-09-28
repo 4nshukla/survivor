@@ -10,6 +10,7 @@ echo '<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">'
 require_once "vendor/autoload.php";
 use app\controllers\homePageController;
 use app\controllers\SignUpController;
+use app\controllers\CertificationController;
 use app\controllers\SurvivorController;
 use app\crons\ScoreStrip;
 use core\helpers\errorController;
@@ -24,6 +25,23 @@ if ($_SERVER['REQUEST_URI'] == "/logout")
 {
     $logout_controller = new SignUpController();
     $logout_controller->logout();
+}
+
+if($_SERVER['REQUEST_URI'] == "/certification")
+{
+
+    $certification_controller = new CertificationController();
+
+    if(!empty($_POST))
+    {
+        $certification_controller->agree();
+    }
+    else
+    {
+        $certification_controller->index();
+    }
+
+
 }
 
 

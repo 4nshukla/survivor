@@ -24,6 +24,12 @@ class SurvivorController
         $user_model = new userModel();
         $user_model->loginCheck();
 
+        $is_certified = $user_model->checkIfCertified();
+        if(!$is_certified)
+        {
+            header( 'Location: /certification' ) ;
+        }
+
         //set current week
         $this->__setCurrentWeek();
 
