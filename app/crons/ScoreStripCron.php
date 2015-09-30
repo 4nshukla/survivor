@@ -111,6 +111,8 @@ class ScoreStrip
         $this->db_handle->query("UPDATE weekly_games SET winner = IF (away_team_score > home_team_score, away_team, home_team) WHERE quarter = 'Final'");
         $this->db_handle->execute();
 
+        $this->db_handle->query("UPDATE weekly_games SET loser = IF (away_team_score < home_team_score, away_team, home_team) WHERE quarter = 'Final'");
+        $this->db_handle->execute();
     }
 
 }

@@ -66,6 +66,17 @@
         font-weight: bold;
         color: #ec971f;
     }
+
+    .winner
+    {
+        color: green;
+    }
+
+    .loser
+    {
+        text-decoration: line-through;
+        color: red;
+    }
 </style>
 
 <div id="sb-site">
@@ -97,8 +108,13 @@
                                     >
 
                         </label>
-                    {% endif %} <span class="team_name"> {{ weekly_score['away_team'] }} </span>
-                                <span class="team_pick_count"> {{ team_pick_count[weekly_score['away_team']] }} </span> {{ weekly_score['away_team_score'] }}<br/>
+                    {% endif %}
+                    {% if weekly_score['away_team'] == weekly_score['loser'] %}  <span class="loser"> {% endif %}
+                    {% if weekly_score['away_team'] == weekly_score['winner'] %} <span class="winner"> {% endif %}
+                                <span class="team_name"> {{ weekly_score['away_team'] }} </span>
+                                <span class="team_pick_count"> {{ team_pick_count[weekly_score['away_team']] }} </span> {{ weekly_score['away_team_score'] }}
+                    {% if (weekly_score['away_team'] == weekly_score['loser']) or (weekly_score['away_team'] == weekly_score['winner']) %} </span> {% endif %}
+                    <br/>
                     {% if weekly_score['home_team'] in user_data['previous_picks'] %} <img src="../app/assets/images/stop.png" width="20px;" />
                     {% else %}
                         <label><input
@@ -111,8 +127,11 @@
                                     {% if weekly_score['game_remain'] == 0 %} disabled="disabled" {% endif %}
                                  >
                         </label>
-                    {% endif %} <span class="team_name">  {{ weekly_score['home_team'] }} </span>
+                    {% endif %}
+                        {% if weekly_score['home_team'] == weekly_score['loser'] %}  <span class="loser"> {% endif %}
+                        {% if weekly_score['home_team'] == weekly_score['winner'] %} <span class="winner"> {% endif %}<span class="team_name">  {{ weekly_score['home_team'] }} </span>
                                 <span class="team_pick_count"> {{ team_pick_count[weekly_score['home_team']] }} </span> {{ weekly_score['home_team_score'] }}
+                        {% if (weekly_score['home_team'] == weekly_score['loser']) or (weekly_score['home_team'] == weekly_score['winner']) %} </span> {% endif %}
                 </div>
             {% endfor %}
         </div>
