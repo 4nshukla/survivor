@@ -111,7 +111,7 @@
                     {% endif %}
                     {% if weekly_score['away_team'] == weekly_score['loser'] %}  <span class="loser"> {% endif %}
                     {% if weekly_score['away_team'] == weekly_score['winner'] %} <span class="winner"> {% endif %}
-                                <span class="team_name"> {{ weekly_score['away_team'] }} </span>
+                                <span class="team_name"> {{ weekly_score['away_team_name'] }} </span>
                                 <span class="team_pick_count"> {{ team_pick_count[weekly_score['away_team']] }} </span> {{ weekly_score['away_team_score'] }}
                     {% if (weekly_score['away_team'] == weekly_score['loser']) or (weekly_score['away_team'] == weekly_score['winner']) %} </span> {% endif %}
                     <br/>
@@ -129,7 +129,8 @@
                         </label>
                     {% endif %}
                         {% if weekly_score['home_team'] == weekly_score['loser'] %}  <span class="loser"> {% endif %}
-                        {% if weekly_score['home_team'] == weekly_score['winner'] %} <span class="winner"> {% endif %}<span class="team_name">  {{ weekly_score['home_team'] }} </span>
+                        {% if weekly_score['home_team'] == weekly_score['winner'] %} <span class="winner"> {% endif %}
+                                <span class="team_name">  {{ weekly_score['home_team_name'] }} </span>
                                 <span class="team_pick_count"> {{ team_pick_count[weekly_score['home_team']] }} </span> {{ weekly_score['home_team_score'] }}
                         {% if (weekly_score['home_team'] == weekly_score['loser']) or (weekly_score['home_team'] == weekly_score['winner']) %} </span> {% endif %}
                 </div>

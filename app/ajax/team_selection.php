@@ -48,8 +48,14 @@ function insertUserPicks()
 
 function __random_funny_lines($team_picked)
 {
+        $team_name = __getTeamName($team_picked);
+
         $funny_lines = [
             'ha ha, you really think team_picked can win this week?',
+            'team_picked suck this season. Dont they?',
+            'picking team_picked is the best decision you have made so far',
+            'team_picked??? Wow. The gamble god warn you not to pick them!',
+            'team_picked??? Wow. You just made the gamble god happy. :)',
             'Good luck bud. I am rooting for team_picked as well',
             'Booya. Way to go. team_picked looks strong',
             'Poor you. There is no way team_picked is winning this week',
@@ -57,7 +63,15 @@ function __random_funny_lines($team_picked)
             'I will give you a pizza slice is team_picked wins this week',
         ];
 
-    $random_lines = str_replace("team_picked", $team_picked, $funny_lines);
+    $random_lines = str_replace("team_picked", $team_name, $funny_lines);
     $random_line = array_rand($random_lines, 1);
     return $random_lines[$random_line];
+}
+
+function __getTeamName($team_picked)
+{
+    $db_handle = new \core\database();
+    $db_handle->query("SELECT `name` FROM teams WHERE short_name = '".$team_picked."'");
+    $team_name = $db_handle->Single();
+    return $team_name['name'];
 }

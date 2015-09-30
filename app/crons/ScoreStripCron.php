@@ -2,6 +2,7 @@
 namespace app\crons;
 
 use core\database;
+use app\models\userPicksModel;
 
 class ScoreStrip
 {
@@ -50,6 +51,34 @@ class ScoreStrip
 
     }
 
+    public function updateNoPickUsers()
+    {
+        $this->db_handle->query('SELECT site_value FROM settings WHERE site_key = "current_week"');
+        $week_in_db = $this->db_handle->Single();
+
+        $previous_week = $week_in_db['site_value']-1;
+
+        $sql = "SELECT id FROM
+                (SELECT id, full_name, 'in' as `status` FROM users WHERE id NOT IN (SELECT DISTINCT user_id FROM user_picks WHERE does_move_on = 0)) as a
+                WHERE id NOT IN (SELECT user_id FROM user_picks WHERE week_number = ".$previous_week.")";
+
+        $this->db_handle->query($sql);
+        $no_pick_lost_users = $this->db_handle->resultset();
+
+        foreach($no_pick_lost_users as $no_pick_lost_user)
+        {
+            $sql = "INSERT INTO user_picks (user_id, week_number, team_picked, does_move_on) VALUES (".$no_pick_lost_user['id'].",".$previous_week.",'NOPICK',0)";
+            echo $sql;
+
+            $this->db_handle->query($sql);
+            $this->db_handle->execute();
+        }
+
+
+
+
+    }
+
     public function WeeklyGameInsert()
     {
         $scores = file_get_contents('http://www.nfl.com/liveupdate/scorestrip/scorestrip.json');
@@ -74,6 +103,7 @@ class ScoreStrip
         {
             //first update last week's user records
             $this->updateUserGameStatus();
+            $this->updateNoPickUsers();
 
             foreach($scores['ss'] as $value)
             {
