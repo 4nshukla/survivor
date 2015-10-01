@@ -143,4 +143,13 @@ class SurvivorController
                 $_SESSION['current_week'] = $setting['site_value'];
         }
     }
+
+    public function report()
+    {
+        $user_picks_model = new userPicksModel();
+        echo "<pre>";
+        print_r($user_picks_model->getCurrentWeekPicksAllUser());
+        echo "</pre>";
+
+    }
 }

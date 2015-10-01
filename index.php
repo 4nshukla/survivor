@@ -77,6 +77,12 @@ if ($_SERVER['REQUEST_URI'] == "/survivor")
     $survivor_controller->index();
 }
 
+if ($_SERVER['REQUEST_URI'] == "/report")
+{
+    $survivor_controller = new SurvivorController();
+    $survivor_controller->report();
+}
+
 
 if ($_SERVER['REQUEST_URI'] != "/")
     $homepage = new homePageController();
