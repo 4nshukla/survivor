@@ -90,7 +90,7 @@ class SurvivorController
             {
                 $this_week[$key]['quarter'] = "Quarter: ".$this_week[$key]['quarter'];
             }
-            elseif($this_week[$key]['quarter'] != "Final" AND $this_week[$key]['quarter'] != "Halftime")
+            elseif($this_week[$key]['quarter'] != "Final" AND $this_week[$key]['quarter'] != "Halftime" AND $this_week[$key]['quarter'] != "final overtime")
             {
                 $this_week[$key]['quarter'] = strtoupper($this_week[$key]['day']. " AT " . $this_week[$key]['time']);
                 $this_week[$key]['home_team_score'] = "--";
