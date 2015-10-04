@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_URI'] == "/score-strip")
 
 if ($_SERVER['REQUEST_URI'] == "/logout")
 {
-    $logout_controller = new SignUpController();
-    $logout_controller->logout();
+    $homepage_controller = new homePageController();
+    $homepage_controller->logout();
 }
 
 if($_SERVER['REQUEST_URI'] == "/certification")

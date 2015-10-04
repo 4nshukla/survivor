@@ -41,6 +41,14 @@ class userModel extends database
             return $user_data;
     }
 
+    public function getUserByID($user_id)
+    {
+        $this->db_handle->query("SELECT * FROM users WHERE id = :user_id");
+        $this->db_handle->bind(':user_id',$user_id);
+        $user_data = $this->db_handle->resultset();
+        return $user_data;
+    }
+
 
     public function getCurrentUserStatus($user_id = null)
     {

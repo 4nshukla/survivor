@@ -29,11 +29,6 @@ class SignUpController
         header( 'Location: /' ) ;
     }
 
-    public function logout()
-    {
-        session_destroy();
-        header( 'Location: /' ) ;
-    }
 
 
 }
