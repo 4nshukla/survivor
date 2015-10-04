@@ -82,7 +82,7 @@ class homePageController
     {
         //delete session
         session_destroy();
-        
+
         // unset cookies
         if (isset($_SERVER['HTTP_COOKIE'])) {
             $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
