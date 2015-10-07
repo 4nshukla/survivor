@@ -1,7 +1,7 @@
 <?php
 
 /*error reporting*/
-error_reporting(E_ALL);
+include_once "app/system/config.php";
 session_start();
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
